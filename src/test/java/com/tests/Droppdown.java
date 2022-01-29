@@ -1,8 +1,12 @@
 package com.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -18,13 +22,32 @@ public class Droppdown {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://the-internet.herokuapp.com/dropdown");
+        driver.get("https://www.amazon.com/");
         }
 
      @Test
-     public void dropdownTest(){
+     public void dropdownTest() throws InterruptedException {
+
+        WebElement drop =driver.findElement(By.xpath("//select[@class='nav-search-dropdown searchSelect nav-progressive-attrubute nav-progressive-search-dropdown']"));
+
+        Select select = new Select(drop);
+        select.selectByIndex(2);
+
+        driver.findElement(By.id("nav-search-submit-button")).click();
+
+        WebElement produkt11 = driver.findElement(By.xpath("(//span[@class='a-size-base-plus a-color-base a-text-normal'])[11]"));
+         System.out.println(produkt11.getText());
+         produkt11.click();
+
+         driver.findElement(By.xpath("(//span[@class='a-button-inner'])[7]")).click();
 
 
+
+
+     }
+     @AfterClass
+    public void teardown(){
+        driver.close();
      }
 
 }
