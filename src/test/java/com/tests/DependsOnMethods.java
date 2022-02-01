@@ -12,6 +12,7 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 
 public class DependsOnMethods {
@@ -24,13 +25,13 @@ public class DependsOnMethods {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
-    @Test (priority = 1)
+    @Test
     public void startSeiteTest(){
         driver.get("https://www.alibaba.com");
         WebElement logoAlibab = driver.findElement(By.xpath("(//a[@class='J-sc-hd-i-logo sc-hd-i-logo sc-hd-i-logo-new'])[2]"));
         Assert.assertTrue(logoAlibab.isDisplayed());
     }
-    @Test (priority = 2)
+    @Test (dependsOnMethods = "startSeiteTest")
     public void suchTest(){
         WebElement search = driver.findElement(By.xpath("//input[@class='ui-searchbar-keyword']"));
         search.sendKeys("nutella");
@@ -39,7 +40,7 @@ public class DependsOnMethods {
         Assert.assertTrue(driver.getTitle().contains("Nutella"));
 
     }
-    @Test(priority = 3)
+    @Test(dependsOnMethods = "suchTest")
     public void preisNutella() throws InterruptedException {
 
         WebElement aaa = driver.findElement(By.xpath("//img[@class='J-img-switcher-item']"));
@@ -55,12 +56,12 @@ public class DependsOnMethods {
             }
         }
 
+        driver.switchTo().window(ikinciSayfaHandle);
         driver.findElement(By.xpath("//div[@class='gdpr-btn gdpr-agree-btn']")).click();
 
-        WebElement preis = driver.findElement(By.className("//input[@class='ui-searchbar-keyword']"));
-        System.out.println(preis.getText().split(" "));
-
-
+        WebElement preis = driver.findElement(By.xpath("//span[@class='ma-ref-price']"));
+        String erwarteterpreis = "$3.50";
+        Assert.assertTrue(preis.getText().contains(erwarteterpreis));
 
     }
     @AfterClass
