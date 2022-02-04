@@ -65,12 +65,13 @@ public class SoftAssert {
     public void kralSakir() throws InterruptedException {
         driver.get("http://www.youtube.com");
         driver.findElement(By.xpath("(//yt-formatted-string[@class='style-scope ytd-button-renderer style-primary size-default'])[2]")).click();
-        Thread.sleep(3);
-        WebElement suchFeld = driver.findElement(By.xpath("//div[@class='ytd-searchbox-spt']"));
+        Thread.sleep(3000);
+        WebElement suchFeld = driver.findElement(By.xpath("//input[@class='ytd-searchbox']"));
         suchFeld.sendKeys("kral sakir");
+        suchFeld.submit();
     }
     @AfterClass
     public void tearDown(){
-        //driver.close();
+        driver.close();
     }
 }
