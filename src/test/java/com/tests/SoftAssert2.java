@@ -8,8 +8,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SoftAssert2 {
     WebDriver driver;
@@ -42,10 +45,86 @@ public class SoftAssert2 {
 
         // 6. Pay Bills sayfasina gidin
 
+        List<String> kundenList = new ArrayList<>();
+
         for (int i=1; i<26; i++){
             WebElement kunde =driver.findElement(By.xpath("(//mat-grid-tile[@class='mat-grid-tile element ng-star-inserted'])["+i+"]"));
-            System.out.println(kunde.getText());
+            //System.out.println(kunde.getText());
+            kundenList.add(kunde.getText());
         }
+        System.out.println(kundenList);
+
+        WebElement sadeVatandas = driver.findElement(By.xpath("(//div[@class='mat-grid-tile-content'])[18]"));
+        sadeVatandas.click();
+
+        WebElement geburstDatum = driver.findElement(By.id("birth_date"));
+        //geburstDatum.clear();
+        geburstDatum.sendKeys("18/10/2000");
+
+        driver.findElement(By.id("save")).click();
+        Thread.sleep(1000);
+        WebElement message = driver.findElement(By.xpath("//div[@class='cdk-global-overlay-wrapper']"));
+        String erwareteMessage = "Could not save client";
+        System.out.println(message.getText());
+
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertEquals(message.getText(), erwareteMessage);
+
+        driver.findElement(By.id("dream_car")).click();
+        driver.findElement(By.id("button_new_car")).click();
+
+        WebElement model1PriceBase = driver.findElement(By.id("label_price_component"));
+        System.out.println(model1PriceBase.getText());
+        softAssert.assertTrue(model1PriceBase.getText().equals(" 29.000,00 €"));
+
+        WebElement arrowNext = driver.findElement(By.id("arrow_next"));
+        arrowNext.click();
+
+        driver.findElement(By.id("mat-select-value-5")).click();
+        WebElement motor2Punkt = driver.findElement(By.xpath("(//span[@class='mat-option-text'])[4]"));
+        motor2Punkt.click();
+        WebElement totalAmount = driver.findElement(By.id("label_price_sum"));
+        System.out.println(totalAmount.getText());
+        softAssert.assertTrue(totalAmount.getText().equals("31.200,00 €"));
+
+
+        driver.findElement(By.id("arrow_next")).click();
+
+        WebElement luxusPackage = driver.findElement(By.xpath("(//span[@class='mat-radio-inner-circle'])[3]"));
+        luxusPackage.click();
+        softAssert.assertTrue(driver.findElement(By.id("label_price_sum")).getText().equals("36.699,99 €"));
+
+        driver.findElement(By.id("arrow_next")).click();
+
+        Thread.sleep(2000);
+        WebElement floorMats =driver.findElement(By.xpath("(//label[@class='mat-checkbox-layout'])[2]"));
+        WebElement intelligentLight =driver.findElement(By.xpath("(//label[@class='mat-checkbox-layout'])[3]"));
+        WebElement leatherstWheel =driver.findElement(By.xpath("(//label[@class='mat-checkbox-layout'])[4]"));
+
+        floorMats.click();
+        intelligentLight.click();
+        leatherstWheel.click();
+
+        driver.findElement(By.id("arrow_next")).click();
+        driver.findElement(By.id("arrow_next")).click();
+
+        driver.findElement(By.xpath("(//span[@class='mat-button-wrapper'])[8]")).click();
+        driver.findElement(By.xpath("(//span[@class='mat-button-wrapper'])[7]")).click();
+        driver.findElement(By.id("order_close_ok")).click();
+        WebElement orderMessage = driver.findElement(By.xpath("//div[@class='cdk-global-overlay-wrapper']"));
+        System.out.println(orderMessage.getText());
+
+
+
+
+
+
+
+
+        Thread.sleep(3000);
+        softAssert.assertAll();
+
 
         // 7. “Purchase Foreign Currency” tusuna basin
         // 8. “Currency” drop down menusunden Eurozone’u secin
@@ -54,7 +133,7 @@ public class SoftAssert2 {
         // "Canada (dollar)","Switzerland (franc)","China (yuan)","Denmark (krone)","Eurozone (euro)","Great Britain (pound)",
         // "Hong Kong (dollar)","Japan (yen)","Mexico (peso)","Norway (krone)","New Zealand (dollar)","Sweden (krona)",
         // "Singapore (dollar)","Thailand (baht)"
-        Thread.sleep(3000);
+
     }
     @AfterClass
     public void tearDown(){
