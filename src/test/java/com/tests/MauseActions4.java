@@ -27,4 +27,6 @@ public class MauseActions4 extends TestBase {
 
 
     }
+    @Test
+    public void teset(){}
 }
