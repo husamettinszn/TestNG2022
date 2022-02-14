@@ -19,8 +19,8 @@ public class KeyboardActions1 extends TestBase {
         //actions.sendKeys(suchFeld, "Samsung").perform();
         actions.click(suchFeld).perform();
 
-        String gesuchtesWort = "Samsung";
-        actions.sendKeys("Samsung").sendKeys(Keys.ENTER).perform();
+        String gesuchtesWort = "Semaver";
+        actions.sendKeys(gesuchtesWort).sendKeys(Keys.ENTER).perform();
 
         WebElement suchFeld1 = driver.findElement(By.id("twotabsearchtextbox"));
 
