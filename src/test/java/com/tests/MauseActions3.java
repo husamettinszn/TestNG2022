@@ -36,6 +36,7 @@ public class MauseActions3 extends TestBase {
 
         WebElement wiederClick = driver.findElement(By.xpath("(//img[@class='a-dynamic-image p13n-sc-dynamic-image p13n-product-image'])[14]"));
         actions.click(wiederClick).perform();
+
         Thread.sleep(5000);
     }
 }
