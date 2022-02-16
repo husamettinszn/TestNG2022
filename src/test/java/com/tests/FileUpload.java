@@ -20,10 +20,9 @@ public class FileUpload extends TestBase {
         WebElement dataAuswhlen = driver.findElement(By.id("file-upload"));
 
         String homePath = System.getProperty("user.home");
-        String filePath =  homePath + "\\Downloads\\CAPSTONE PROJESI TEST PLANI Hüsamettin SÖZEN (2).docx";
+        String filePath = homePath + "\\Downloads\\CAPSTONE PROJESI TEST PLANI Hüsamettin SÖZEN (2).docx";
 
         dataAuswhlen.sendKeys(filePath);
-        Thread.sleep(3000);
 
         WebElement upLoad = driver.findElement(By.id("file-submit"));
         upLoad.click();
@@ -31,16 +30,6 @@ public class FileUpload extends TestBase {
         WebElement upLoadMesage = driver.findElement(By.tagName("h3"));
 
         Assert.assertTrue(upLoadMesage.isDisplayed());
-
-
-
-        Thread.sleep(3000);
-
-
-
-
-
-
 
 
     }
