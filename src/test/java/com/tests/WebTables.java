@@ -4,6 +4,7 @@ import com.utilities.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import sun.awt.windows.ThemeReader;
@@ -13,9 +14,10 @@ import java.util.List;
 
 public class WebTables extends TestBase {
 
-    public void login(){
+    public void login() throws InterruptedException {
         driver.get("http://qa-environment.crystalkeyhotels.com/admin/HotelRoomAdmin");
 
+        Thread.sleep(2000);
         WebElement userNameTextBox = driver.findElement(By.id("UserName"));
         userNameTextBox.sendKeys("manager");
         WebElement passwordTextBox = driver.findElement(By.id("Password"));
@@ -61,7 +63,7 @@ public class WebTables extends TestBase {
         System.out.println(zeile4.getText());
     }
     @Test
-    public void printCells(){
+    public void printCells() throws InterruptedException {
         login();
         List<WebElement> allZellen = driver.findElements(By.xpath("//tbody//td"));
 
@@ -111,16 +113,20 @@ public class WebTables extends TestBase {
             System.out.println(dritteSäule.getText());
         }
     }
-    public void printData(int zelle, int säule) throws InterruptedException {
-        login();
+    public String printData(int zelle, int säule) throws InterruptedException {
+
         Thread.sleep(2000);
         WebElement data = driver.findElement(By.xpath("//tbody//tr["+zelle+"]//td["+säule+"]"));
-        System.out.println(data.getText());
+        //System.out.println(data.getText());
+
+        return data.getText();
 
     }
     @Test
     public void data() throws InterruptedException {
+        login();
         printData(1,2);
+       Assert.assertEquals(printData(1,2), "BenDeniz");
     }
 
 
