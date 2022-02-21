@@ -55,7 +55,7 @@ public class WebTables2 extends TestBase {
             System.out.println(säule3.getText());
         }
 
-         */
+
         //Tabloda "First Name" i Kierra olan kisinin Salary'sini yazdirin
         List<WebElement> lastName = driver.findElements(By.xpath("//div[@class='rt-tr-group']//div[2]"));
 
@@ -77,5 +77,20 @@ public class WebTables2 extends TestBase {
         }
         WebElement emailVega= driver.findElement(By.xpath("(//div[@class='rt-tr-group'])["+zeile+"]//div["+emailZelle+"]"));
         System.out.println(emailVega.getText());
+
+         */
+    }
+
+    public String druckData(int zeile, int säule){
+        driver.get("https://demoqa.com/webtables");
+        WebElement zelleData = driver.findElement(By.xpath("(//div[@class='rt-tr-group'])["+zeile+"]//div["+säule+"]"));
+        System.out.println(zelleData.getText());
+
+        return zelleData.getText();
+    }
+    @Test
+    public void druckData(){
+        druckData(2,3);
     }
 }
+

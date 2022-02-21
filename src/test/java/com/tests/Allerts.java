@@ -73,4 +73,5 @@ public class Allerts {
     public void tearDown(){
         driver.close();
     }
+
 }
